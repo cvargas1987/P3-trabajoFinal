@@ -1,6 +1,7 @@
 import POSmenuAdministrativo
 import POSmenuReportes
 import os
+import POS
 
 def menuPrincipal():
     while True:
@@ -18,7 +19,9 @@ def menuPrincipal():
         opcion = (input("Ingresar Opcion: "))
         if (opcion == "0"):
             break
-        #if (opcion == "1"):
+        if (opcion == "1"):
+            opcion1 = POS.POS()
+            opcion1.inicio()
             
         if (opcion == "2"):
             POSmenuReportes.menuReportes()

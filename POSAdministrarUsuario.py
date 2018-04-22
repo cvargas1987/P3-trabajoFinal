@@ -3,6 +3,14 @@ import re
 
 class usuariosAdministrar (object):
     
+    def validarPatron (self,campo):
+        patron = '[a-z0-9][a-z0-9]'
+        if re.match(patron,campo):
+            return True
+        else:
+            msn = (input("Valor Invalido!"))
+            return False
+    
     def validarLogin (self, loginValidar):
         try:
                 f = open('usuarios.txt','r')
@@ -35,26 +43,28 @@ class usuariosAdministrar (object):
             password = ""
             nom = ""
             nivel = 0
+            while True: 
+                login = (input("Login: "))
+                v = usuariosAdministrar()
+                if (v.validarPatron(login) == True): 
+                    if (v.validarLogin(login) == True):
+                        x = (input("Este Usuario ya Existe <ENTER>"))
+                    else: 
+                        break
+                    
+            password = (input("Contraseña: "))
+            nom = (input("Nombre: " ))
+            nivel = (input("Nivel: "))
+            login = login.lower()
+            password = password.lower()
+            nom = nom.lower()
 
-            login = (input("Login: "))
-            if (login == "0"):
-                break
-
-            v = usuariosAdministrar()
-            if (v.validarLogin(login) == True):
-                x = (input("Este Usuario ya Existe <ENTER>"))
-            else: 
-                password = (input("Contraseña: "))
-                nom = (input("Nombre: " ))
-                nivel = (input("Nivel: "))
-                login = login.lower()
-                password = password.lower()
-                nom = nom.lower()
-
-                print (" ")
-                opcion = (input("Datos Correctos ?"))
-                if (opcion.lower() == "s"):
-                        f = open ('usuarios.txt','a')
-                        f.write(login + "," + password + "," + nom + "," + nivel + ","+ "\n")
-                        f.close()
-                        opcion = (input("Datos Guardados Correctamente <ENTER>"))
+            print (" ")
+            opcion = (input("Datos Correctos ?"))
+            if (opcion.lower() == "s"):
+                    f = open ('usuarios.txt','a')
+                    f.write(login + "," + password + "," + nom + "," + nivel + ","+ "\n")
+                    f.close()
+                    opcion = (input("Datos Guardados Correctamente <ENTER>"))
+        else: 
+            x = input("Valor Invalido")

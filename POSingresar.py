@@ -2,6 +2,7 @@ import re
 import os
 import POSmenuPrincipal
 
+
 class validar (object):
     def __init__(self, loginValidar, passwordValidar):
         self.loginValidar = loginValidar
@@ -24,7 +25,7 @@ class validar (object):
 
             if (self.loginValidar == login):
                 if (self.passwordValidar== password):
-                    return (True)
+                    return (nombre)
         return (False)
         
 
@@ -35,16 +36,13 @@ if __name__ == '__main__':
         print (chr(27)+"[1;33m"+"    Sistema de Punto de Ventas    ")
         print ( "        INICIAR SESION")
         print ("----------------------------------")
+        
         loginValidar = (input("LOGIN     : "))
         passwordValidar = (input("CONTRASENA: "))
         v = validar(loginValidar,passwordValidar)
-        if (v.validarLogin() == True):
-            x = (input("<<<< Bienvenido " + loginValidar + "!! >>>>"))
+        if (v.validarLogin() is not False):
+            print ("")
+            x = (input("<<<< Bienvenido " +  v.validarLogin() + "!! >>>>"))
             POSmenuPrincipal.menuPrincipal()
-        
 
-
-
-        
-
-    
+            
