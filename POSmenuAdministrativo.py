@@ -1,5 +1,7 @@
 import os
 import POSAdministrarUsuario
+import POSAdministrarEmpresa
+import POSAdministrarPagos
 
 def menuAdministrativo():
     while True:
@@ -26,6 +28,8 @@ def menuAdministrativo():
         if (opcion == "2"):
             break
         if (opcion == "3"):
-            break
+            opcion3 = POSAdministrarPagos.IngresarPagos()
+            opcion3.principal()
         if (opcion == "4"):
-            break
+            opcion4 = POSAdministrarEmpresa.empresa()
+            opcion4.Principal()
