@@ -1,6 +1,7 @@
 import os
 import sys
 import POSingresar
+import datetime
 
 
 class POS (object):
@@ -8,6 +9,8 @@ class POS (object):
     def __init__(self, loginDefault,passDefault):
         self.loginDefault = loginDefault
         self.passDefault = passDefault
+        x = datetime.datetime.now()
+        self.fecha_actual = fecha_actual = ("%s/%s/%s" % (x.day, x.month, x.year))
  
     def calcularDescto (self, precio, porcDescto):
         return  round(((porcDescto * 0.01) * precio),2)
@@ -76,6 +79,7 @@ class POS (object):
         saldoTemp = totalCuenta
         v = POSingresar.validar(self.loginDefault,self.passDefault)
         lineaPagoLista = []
+        
 
         while True:   
             pos = POS(self.loginDefault,self.passDefault)
@@ -83,6 +87,7 @@ class POS (object):
             print ("----------------------------------")
             print ("    Sistema de Punto de Ventas    ")
             print ("               POS")
+            print ("Fecha =  " + self.fecha_actual )
             print ("CJ    :" + v.validarLogin())
             print ("TOTAL : " + str(totalCuenta))
             print ("SALDO : " + str(saldoTemp))       
@@ -141,6 +146,7 @@ class POS (object):
             print ("----------------------------------")
             print ("    Sistema de Punto de Ventas    ")
             print ("               POS")
+            print ("Fecha =  " + self.fecha_actual )
             print ("CJ      : " + v.validarLogin())
             print ("TOTAL   : " + str(total))
             print ("SUBTOTAL: " + str(subtotal))
@@ -188,8 +194,7 @@ class POS (object):
                     except ValueError:
                         msn = (input("<<<Valor Invalido>>>"))
                         break
-                        
-
+            
                 if (pos.validarProducto(codigoTemp) == False):
                     msn = (input("<<<  No Existe Producto  <ENTER>>>>"))
                     break
@@ -239,6 +244,8 @@ class POS (object):
                 + str(montoDescto) 
                 + "," 
                 + "V" 
+                + ","
+                + self.fecha_actual
                 + "," 
                 + "\n")
                 
