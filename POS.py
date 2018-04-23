@@ -82,6 +82,8 @@ class POS (object):
             print ("----------------------------------")
             print ("")
             pagoAscii = (input("Ingrese Forma de Pago: "))
+            if (pagoAscii == "x" or pagoAscii == "X"):
+                return True
             if (pos.validarFormaPago(pagoAscii) == False):
                 msn = (input("<<< Pago Desconocido, vuelva a intentar >>>"))
             else:

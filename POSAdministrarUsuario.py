@@ -45,6 +45,9 @@ class usuariosAdministrar (object):
             nivel = 0
             while True: 
                 login = (input("Login: "))
+                if (login == "0"):
+                    return
+
                 v = usuariosAdministrar()
                 if (v.validarPatron(login) == True): 
                     if (v.validarLogin(login) == True):

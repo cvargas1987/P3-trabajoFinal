@@ -1,3 +1,4 @@
+import os
 class empresa (object):
     
     def Opcion_Agregar(self):
@@ -80,7 +81,12 @@ class empresa (object):
                 print('Registro eliminado.')
 
     def Menu_Principal (self):
-        print ('\t\t MENÚ DE EMPRESA')
+        os.system('cls')
+        print ("----------------------------------")
+        print ("    Sistema de Punto de Ventas    ")
+        print ( "     PARAMETROS DE EMPRESA")
+        print ("----------------------------------")
+        print ( " ")
         print ('1. Agregar Sucursarl.')
         print ('2. Modificar Sucursal.')
         print ('3. Eliminar Sucursal.')

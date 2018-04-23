@@ -46,7 +46,7 @@ class IngresarPagos (object):
                     if id in iidd:
                         forma = ("Ingrese la nueva forma de pago (efectivo, tarjerta o cupon): ")
                         asc = input("Ascii para totalizar la transacción: ")
-                        cambio = (id + ", " + forma + ", " + asc + "\n")
+                        cambio = (id + "," + forma + "," + asc + "\n")
                         linea = cambio
                     datos += linea
                 file.cloase()
@@ -56,9 +56,10 @@ class IngresarPagos (object):
     
     def menuPagos(self):
         os.system('cls')
-        print (" ")
+        print ("----------------------------------")
         print ("    Sistema de Punto de Ventas    ")
-        print ("      MENU CREACION DE PAGOS   ")
+        print ( " CREAR/CONSULTAR FORMAS DE PAGO")
+        print ("----------------------------------")
         print (" ")
         print ("1. Crear pago")
         print ("2. Modificar pago")
@@ -69,7 +70,7 @@ class IngresarPagos (object):
         MenuOpciones = IngresarPagos()
         MenuOpciones.menuPagos()
 
-        opc = input("Dijite el numero de la opción que desea acceder: ")
+        opc = input("Ingresar Opcion: ")
         if opc == "1":
             MenuOpciones.OpcionCrear()
         elif opc == "2":
