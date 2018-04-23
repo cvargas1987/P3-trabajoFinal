@@ -226,6 +226,21 @@ class POS (object):
                 subtotal = round((subtotal + montoNeto),2)
                 total = round((total + pos.calcularImpuesto(montoNeto, impuesto) + montoNeto),2)
                 totalImpuesto = round((totalImpuesto + pos.calcularImpuesto(montoNeto,impuesto)),2)
-                linea = ("1" + "," + self.loginDefault + "," +"folio" + "," + str(total) + "," + str(montoDescto) + "," + "V" + "," + "\n")
+                linea = ("2" 
+                + "," 
+                + self.loginDefault 
+                + "," 
+                +"folio" 
+                + "," 
+                + codigoTemp 
+                + "," 
+                + str(montoNeto) 
+                + "," 
+                + str(montoDescto) 
+                + "," 
+                + "V" 
+                + "," 
+                + "\n")
+                
                 lineaDetalle.append(linea)
                 break

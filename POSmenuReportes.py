@@ -1,5 +1,6 @@
 import os
 import POSreportes_VtaxDia
+import POSreportes_VtaxProd
 
 def menuReportes():
     while True:
@@ -21,7 +22,7 @@ def menuReportes():
         if (opcion == "1"):
             POSreportes_VtaxDia.BPF()            
         if (opcion == "2"):
-            break
+            POSreportes_VtaxProd.reporta_vta_prod()            
         if (opcion == "3"):
             break
         if (opcion == "4"):
