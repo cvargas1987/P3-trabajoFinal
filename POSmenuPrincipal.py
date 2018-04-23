@@ -3,7 +3,10 @@ import POSmenuReportes
 import os
 import POS
 
-def menuPrincipal():
+def menuPrincipal(loginDefault, passDefault):
+    #loginDefault = ""
+    #self.loginDefault = loginDefault
+
     while True:
         os.system('cls')
         print ("----------------------------------")
@@ -20,7 +23,7 @@ def menuPrincipal():
         if (opcion == "0"):
             break
         if (opcion == "1"):
-            opcion1 = POS.POS()
+            opcion1 = POS.POS(loginDefault, passDefault)
             opcion1.inicio()
             
         if (opcion == "2"):

@@ -1,8 +1,13 @@
 import os
 import sys
+import POSingresar
 
 
 class POS (object):
+    
+    def __init__(self, loginDefault,passDefault):
+        self.loginDefault = loginDefault
+        self.passDefault = passDefault
  
     def calcularDescto (self, precio, porcDescto):
         return  round(((porcDescto * 0.01) * precio),2)
@@ -69,21 +74,23 @@ class POS (object):
         pagoTemp = 0
         pagadoTemp = 0
         saldoTemp = totalCuenta
+        v = POSingresar.validar(self.loginDefault,self.passDefault)
+        lineaPagoLista = []
 
         while True:   
-            pos = POS()
+            pos = POS(self.loginDefault,self.passDefault)
             os.system('cls')
             print ("----------------------------------")
             print ("    Sistema de Punto de Ventas    ")
             print ("               POS")
-            print ("Cajero:")
+            print ("CJ    :" + v.validarLogin())
             print ("TOTAL : " + str(totalCuenta))
             print ("SALDO : " + str(saldoTemp))       
             print ("----------------------------------")
             print ("")
             pagoAscii = (input("Ingrese Forma de Pago: "))
             if (pagoAscii == "x" or pagoAscii == "X"):
-                return True
+                return False
             if (pos.validarFormaPago(pagoAscii) == False):
                 msn = (input("<<< Pago Desconocido, vuelva a intentar >>>"))
             else:
@@ -97,6 +104,8 @@ class POS (object):
                         if (pagoMonto > 0):
                             pagadoTemp = round((pagoTemp + pagoMonto),2)
                             saldoTemp = round((saldoTemp - pagoMonto),2)
+                            linea = ("3" + "," + self.loginDefault + "," + "folio" + "," + pagoId + ","  + str(pagoMonto) + "," + "\n")
+                            lineaPagoLista.append(linea)
                             if (saldoTemp <= 0):
                                 os.system('cls')
                                 print ("----------------------------------")
@@ -108,7 +117,7 @@ class POS (object):
                                 print ("----------------------------------")
                                 print ("")
                                 msn = (input("Cuenta Terminada Exitosamente, vuelva pronto !!"))
-                                return True
+                                return lineaPagoLista
                             else:
                                 break
                         else:
@@ -122,43 +131,55 @@ class POS (object):
         totalImpuesto = 0 
         descuento = 0
         totalDescto = 0
-        sw_salir = 0
-
+        mostrar_lineaProducto = ""
+        v = POSingresar.validar(self.loginDefault,self.passDefault)
+        lineaDetalle = []
+        montoDescto = 0
+        
         while True:
             os.system('cls')
-            if (sw_salir == 1):
-                break
-
             print ("----------------------------------")
             print ("    Sistema de Punto de Ventas    ")
             print ("               POS")
-            print ("Cajero: ")
-            print ("")
-            print ("TOTAL:    " + str(total))
+            print ("CJ      : " + v.validarLogin())
+            print ("TOTAL   : " + str(total))
             print ("SUBTOTAL: " + str(subtotal))
             print ("IMPUESTO: " + str(totalImpuesto))
             print ("DESCTO  : " + str(totalDescto))
             print ("----------------------------------")
-            print ("")
-            
+            print ("d : Otorgar Descuento por Linea")
+            print ("* : Totalizar")
+            print ("x : Salir")
+            print ("----------------------------------")
             while True: 
                 if (descuento > 0):
                     print ("Descuento Otorgado por el " +  str(descuento) + "%")
 
-                codigoTemp = (input("Ingresar codigo de producto Producto: "))
+                print (mostrar_lineaProducto)
+                print ("----------------------------------")
+                codigoTemp = (input("Ingresar codigo de Producto: "))
                 print (" ")
-                pos = POS()
+                pos = POS(self.loginDefault, self.passDefault)
 
-                if (codigoTemp == "*"):
-                    if (pos.Totalizar(total) == False):
-                        break
+                if (codigoTemp == "*" and total > 0):
+                    lineaPagos = pos.Totalizar(total)
+                    if (lineaPagos == False):
+                        return
                     else:
-                        sw_salir = 1
-                        break
+                        f = open ('ventas.txt','a')
+                        f.write("1" + "," + self.loginDefault + "," + "folio" + "," + str(totalDescto) + "," + "V" + "," + "\n")
+                        
+                        for i in lineaPagos:
+                            f.write (i)
+                        for i in lineaDetalle:
+                            f.write(i)
+                        
+                        f.close()
+                        msn = (input(""))
+                        return
 
                 if (codigoTemp == "x" or codigoTemp == "X"):
-                    sw_salir = 1 
-                    break
+                    return
 
                 if (codigoTemp == "d" or codigoTemp == "D"):
                     try:
@@ -180,6 +201,8 @@ class POS (object):
                 impuesto = float(linea [3])
                 unidad = linea [4]
                 cantidad = float(1)
+                
+                mostrar_lineaProducto = (descripcion + " x " + str(cantidad) + " = " + str(precio))
 
                 if (unidad == "LT"):
                     try:
@@ -203,9 +226,6 @@ class POS (object):
                 subtotal = round((subtotal + montoNeto),2)
                 total = round((total + pos.calcularImpuesto(montoNeto, impuesto) + montoNeto),2)
                 totalImpuesto = round((totalImpuesto + pos.calcularImpuesto(montoNeto,impuesto)),2)
+                linea = ("1" + "," + self.loginDefault + "," +"folio" + "," + str(total) + "," + str(montoDescto) + "," + "V" + "," + "\n")
+                lineaDetalle.append(linea)
                 break
-
-            
-                
-        
-        

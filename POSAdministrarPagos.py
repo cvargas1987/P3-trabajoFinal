@@ -24,10 +24,10 @@ class IngresarPagos (object):
                         h = True
 
                 if h == True:
-                    forma = input("Ingrese la forma de pago (efectivo, tarjerta o cupon): ")
-                    asc = input("Ascii para totalizar la transacción: ")
+                    forma = input("Descripcion (efectivo, tarjerta o cupon): ")
+                    asc = input("Ascii (para totalizar la transacción): ")
                     archivo = open('pagos.txt', 'w')
-                    archivo.write(id + ", " + forma + ", " + asc + "\n")
+                    archivo.write(id + "," + forma + "," + asc + "," + "\n")
                     archivo.close()
                     print("Datos agregados con exitos")
                 else:
@@ -44,9 +44,9 @@ class IngresarPagos (object):
                 for linea in file:
                     id = linea[0]
                     if id in iidd:
-                        forma = ("Ingrese la nueva forma de pago (efectivo, tarjerta o cupon): ")
-                        asc = input("Ascii para totalizar la transacción: ")
-                        cambio = (id + "," + forma + "," + asc + "\n")
+                        forma = ("Descripcion (efectivo, tarjerta o cupon): ")
+                        asc = input("Ascii (para totalizar la transacción): ")
+                        cambio = (id + "," + forma + "," + asc + "," +"\n")
                         linea = cambio
                     datos += linea
                 file.cloase()

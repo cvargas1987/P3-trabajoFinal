@@ -47,6 +47,6 @@ if __name__ == '__main__':
         if (v.validarLogin() is not False):
             print ("")
             x = (input("<<<< Bienvenido " +  v.validarLogin() + "!! >>>>"))
-            POSmenuPrincipal.menuPrincipal()
+            POSmenuPrincipal.menuPrincipal(loginValidar,passwordValidar)
 
             
