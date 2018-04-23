@@ -1,4 +1,6 @@
 import os
+import POSreportes_VtaxDia
+
 def menuReportes():
     while True:
         os.system('cls')
@@ -15,9 +17,9 @@ def menuReportes():
 
         opcion = (input("Ingresar Opcion: "))
         if (opcion == "0"):
-            break
+            return
         if (opcion == "1"):
-            break
+            POSreportes_VtaxDia.BPF()            
         if (opcion == "2"):
             break
         if (opcion == "3"):
