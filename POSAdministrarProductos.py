@@ -73,7 +73,18 @@ class productosAdministrar (object):
             opcion = (input("Datos Correctos ?"))
             if (opcion.lower() == "s"):
                     f = open ('productos.txt','a')
-                    f.write(pr_codigo + "," + pr_descrip + "," + str(pr_precio) + "," + str(pr_impuesto) + "," + pr_unidad + "\n")
+                    f.write(pr_codigo 
+                    + "," 
+                    + pr_descrip 
+                    + "," 
+                    + str(pr_precio) 
+                    + "," 
+                    + str(pr_impuesto) 
+                    + "," 
+                    + pr_unidad 
+                    + ","
+                    + "\n")
+
                     f.close()
                     opcion = (input("Datos Guardados Correctamente <ENTER>"))
         else: 

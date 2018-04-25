@@ -7,7 +7,8 @@ class IngresarPagos (object):
         try:
             f = open('pagos.txt','r')
         except FileNotFoundError:
-            return ("<<< ERROR!! No Existe Archivo de pagos.txt >>>")  
+            print ("<<< ERROR!! No Existe Archivo de pagos.txt >>>")  
+            return (True)
             
 
         for linea in f.readlines():
