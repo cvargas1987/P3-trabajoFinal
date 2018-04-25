@@ -38,6 +38,7 @@ class productosAdministrar (object):
             print ( " ")
 
             while True: 
+                print ("Oprimir cero (0) para Salir") 
                 pr_codigo = (input("Codigo de Producto: "))
                 if (pr_codigo == "0"):
                     return

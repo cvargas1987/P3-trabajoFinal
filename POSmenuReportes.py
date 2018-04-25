@@ -12,10 +12,8 @@ def menuReportes():
         print ( " ")
         print ("1. Reporte de Venta por rango de Fecha")
         print ("2. Reporte de Ventas por producto")
-        print ("3. Reporte de Ventas por Forma de Pago")
-        print ("4. Reporte de Ventas por Usuario")
         print ("0. SALIR")
-
+        print ("----------------------------------")
         opcion = (input("Ingresar Opcion: "))
         if (opcion == "0"):
             return
@@ -23,7 +21,4 @@ def menuReportes():
             POSreportes_VtaxDia.BPF()            
         if (opcion == "2"):
             POSreportes_VtaxProd.reporta_vta_prod()            
-        if (opcion == "3"):
-            break
-        if (opcion == "4"):
-            break
+       

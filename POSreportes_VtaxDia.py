@@ -1,25 +1,29 @@
+import os
 def BPF():
-    import os.path
-    verificador = os.path.isfile('ventas.txt')
-    if verificador == False:
-        print('El archivo que contiene los reportes no existía y fue creado.')
-        with open('ventas.txt', 'w') as file:
-            file.close()
-    elif os.stat('ventas.txt').st_size == 0:
-        print('Este archivo no contiene información.')
-    else:
-        with open('ventas.txt') as file:
-            contenido = ''
-            IF = input('Introduzca la fecha con el siguiente formato (aaaa-mm-dd): ')
-            cont = 0
-            for linea in file.readlines():
-                lista = linea.strip().split(', ')
-                if IF in lista[0]:
-                    contenido += linea
-                    print(linea.strip())
-                    cont  +=1
-            if cont == 0:
-                print('El dato introducido no es válido o no existe.')
+    while True:
+        total = 0
+        os.system('cls')
+        print("----------------------------------")
+        print("    Sistema de Punto de Ventas    ")
+        print("    REPORTE DE VENTAS POR FECHA")
+        print("----------------------------------")
+        print(" ")
+        while True:
+            fecha = (input("Ingresa la fecha (DD/MM/AAAA) de búsqueda: "))
+            if (fecha == '0'): 
+                return
+            try:
+                f = open('ventas.txt', 'r')
+            except FileExistsError:
+                msn = (input("ERROR: no existe el archivo de ventas"))
+                break
 
-        with open('reportefecha.txt', 'w') as file:
-            file.write(contenido)
+            if (fecha == 0):
+                return
+
+            for linea in f.readlines():
+                linea = linea.split(',')
+                if (linea[0] == '1' and linea[6] == fecha):
+                    total = float(linea[3]) + total
+            break
+        msn = (input("Total en ventas por fecha: " + str(total) + "$"))

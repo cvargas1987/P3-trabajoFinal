@@ -57,18 +57,13 @@ class POS (object):
             return (False) 
 
         for linea in f.readlines():
+            linea = linea.split(',')
             try:    
-                linea = linea.split(',') 
-                pagoId = linea[0]
-                pagoDescrip = linea[1]
-                pagoAscii = linea [2] 
+               if ( ascii in linea[2] ):
+                    return (linea[0],linea[1])
             except IndexError:
-                print ("ERROR: verificar interfaz de pagos")
-                return False
-            
-            if (ascii == pagoAscii):
-                return (pagoId, pagoDescrip)
-
+                msnError = ("ERROR: verificar interfaz de pagos")
+                
         return (False) 
 
     def Totalizar (self, totalCuenta):
@@ -80,7 +75,6 @@ class POS (object):
         v = POSingresar.validar(self.loginDefault,self.passDefault)
         lineaPagoLista = []
         
-
         while True:   
             pos = POS(self.loginDefault,self.passDefault)
             os.system('cls')
@@ -93,6 +87,20 @@ class POS (object):
             print ("SALDO : " + str(saldoTemp))       
             print ("----------------------------------")
             print ("")
+            try:
+                f = open('pagos.txt','r')
+                for linea in f.readlines():
+                    linea = linea.split(',')
+                    try: 
+                        print ( "* Tecla <" + linea[2].strip() + "> : " + linea[1])
+                    except IndexError as e:
+                        msnError = (e)
+
+
+            except FileNotFoundError:
+                print ("--> ERROR!! No Existe Archivo pagos.txt")  
+
+            print ("----------------------------------")
             pagoAscii = (input("Ingrese Forma de Pago: "))
             if (pagoAscii == "x" or pagoAscii == "X"):
                 return False
@@ -109,7 +117,21 @@ class POS (object):
                         if (pagoMonto > 0):
                             pagadoTemp = round((pagoTemp + pagoMonto),2)
                             saldoTemp = round((saldoTemp - pagoMonto),2)
-                            linea = ("3" + "," + self.loginDefault + "," + "folio" + "," + pagoId + ","  + str(pagoMonto) + "," + "\n")
+                            linea = (
+                                "3" 
+                                + "," 
+                                + self.loginDefault 
+                                + "," 
+                                + "folio" 
+                                + "," 
+                                + pagoId 
+                                + ","  
+                                + str(pagoMonto) 
+                                + "," 
+                                + self.fecha_actual
+                                + "," 
+                                + "\n")
+
                             lineaPagoLista.append(linea)
                             if (saldoTemp <= 0):
                                 os.system('cls')
@@ -121,7 +143,6 @@ class POS (object):
                                 print ("CAMBIO : " + str(saldoTemp))       
                                 print ("----------------------------------")
                                 print ("")
-                                msn = (input("Cuenta Terminada Exitosamente, vuelva pronto !!"))
                                 return lineaPagoLista
                             else:
                                 break
@@ -173,7 +194,23 @@ class POS (object):
                         return
                     else:
                         f = open ('ventas.txt','a')
-                        f.write("1" + "," + self.loginDefault + "," + "folio" + "," + str(totalDescto) + "," + "V" + "," + "\n")
+
+                        f.write(
+                        "1" 
+                        + "," 
+                        + self.loginDefault 
+                        + "," 
+                        + "folio" 
+                        + "," 
+                        + str(total) 
+                        + "," 
+                        + str(totalDescto)
+                        + "," 
+                        + "V" 
+                        + "," 
+                        + self.fecha_actual
+                        + "," 
+                        + "\n")
                         
                         for i in lineaPagos:
                             f.write (i)
@@ -181,7 +218,7 @@ class POS (object):
                             f.write(i)
                         
                         f.close()
-                        msn = (input(""))
+                        msn = (input("Cuenta Terminada Exitosamente, vuelva pronto !!"))
                         return
 
                 if (codigoTemp == "x" or codigoTemp == "X"):
@@ -207,7 +244,7 @@ class POS (object):
                 unidad = linea [4]
                 cantidad = float(1)
                 
-                mostrar_lineaProducto = (descripcion + " x " + str(cantidad) + " = " + str(precio))
+                
 
                 if (unidad == "LT"):
                     try:
@@ -228,10 +265,14 @@ class POS (object):
                     totalDescto = (totalDescto + montoDescto)
                     descuento = 0
 
+                mostrar_lineaProducto = (descripcion + " x " + str(cantidad) + " = " + str(montoNeto))
+
+                montoImpuesto = pos.calcularImpuesto(montoNeto,impuesto)    
                 subtotal = round((subtotal + montoNeto),2)
                 total = round((total + pos.calcularImpuesto(montoNeto, impuesto) + montoNeto),2)
-                totalImpuesto = round((totalImpuesto + pos.calcularImpuesto(montoNeto,impuesto)),2)
-                linea = ("2" 
+                totalImpuesto = round((totalImpuesto + montoImpuesto),2)
+                linea = (
+                  "2" 
                 + "," 
                 + self.loginDefault 
                 + "," 
@@ -241,9 +282,11 @@ class POS (object):
                 + "," 
                 + str(montoNeto) 
                 + "," 
+                + str(montoImpuesto) 
+                + "," 
                 + str(montoDescto) 
                 + "," 
-                + "V" 
+                + descripcion 
                 + ","
                 + self.fecha_actual
                 + "," 

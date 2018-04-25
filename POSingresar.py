@@ -47,5 +47,7 @@ if __name__ == '__main__':
             print ("")
             x = (input("<<<< Bienvenido " +  v.validarLogin() + "!! >>>>"))
             POSmenuPrincipal.menuPrincipal(loginValidar,passwordValidar)
+        else: 
+            x = (input(" Login o Contrasena NO coinciden, Verifique ! "))
 
             

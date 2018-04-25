@@ -1,37 +1,63 @@
 import os
+import os.path
 
 class IngresarPagos (object):
+    
+    def validarExisteDato (self, posicion, datoComparar):
+        try:
+            f = open('pagos.txt','r')
+        except FileNotFoundError:
+            return ("<<< ERROR!! No Existe Archivo de pagos.txt >>>")  
+            
+
+        for linea in f.readlines():
+            linea = linea.split(",")
+            try:
+                if datoComparar in linea[posicion]:
+                    return ("Ya Existe")
+            except IndexError:
+                return (True)
+        return (True)
 
     def OpcionCrear(self):
-        import os.path
-        h = False
-        while h == False:
-            com = os.path.isfile("pagos.txt")
-            if com == False:
-                with open("pagos.txt", "w") as file:
-                    file.close()
-                    h = True
-            elif os.stat("pagos.txt").st_size == 0:
-                h = True 
+        while True: 
+            while  True:
+                os.system('cls')
+                print ("----------------------------------")
+                print ("    Sistema de Punto de Ventas    ")
+                print ("      MENU CREACION DE PAGOS   ")
+                print ("----------------------------------")
+                
+                p = IngresarPagos()
+                h = False
+                
+                id = input ("ID: <(0) Salir> " )
+                if (id == "0"):
+                    return
 
-            with open ("pagos.txt") as file:
-                id = input ("Ingrese el ID de la forma de pago: ")
-                for linea in file.readlines():
-                    lista = linea. strip().split(", ")
-                    if id in lista[0]:
-                        h = False
-                    else:
-                        h = True
+                validarD = p.validarExisteDato(0,id) 
+                if  validarD is not True:
+                    msn = (input(validarD))    
+                    break
 
-                if h == True:
-                    forma = input("Descripcion (efectivo, tarjerta o cupon): ")
-                    asc = input("Ascii (para totalizar la transacción): ")
-                    archivo = open('pagos.txt', 'w')
-                    archivo.write(id + "," + forma + "," + asc + "," + "\n")
-                    archivo.close()
-                    print("Datos agregados con exitos")
-                else:
-                    print("Los datos ya existen")
+                forma = input("Descripcion: (Efectivo, Tarjerta de Credito, etc...): ")
+                asc = input("Teclado: ")
+                validarD = p.validarExisteDato(2,asc) 
+                if  validarD is not True:
+                    msn = (input(validarD))    
+                    break
+                while True:
+                    msn = (input("Datos correctos ? S/N: "))
+                    if (msn == "N" or msn == "n"):
+                        return
+                    elif (msn == "S" or msn == "s"):
+                        break
+
+                archivo = open('pagos.txt', 'a')
+                archivo.write(id + "," + forma + "," + asc + "\n")
+                archivo.close()
+                msn = (input("<<< Datos agregados Correctamente, oprimir cualquier tecla para continuar. >>>"))
+
     def OpcionCambiar(self):
         import os.path
         com = os.path.isfile("pagos.txt")
@@ -44,12 +70,12 @@ class IngresarPagos (object):
                 for linea in file:
                     id = linea[0]
                     if id in iidd:
-                        forma = ("Descripcion (efectivo, tarjerta o cupon): ")
-                        asc = input("Ascii (para totalizar la transacción): ")
-                        cambio = (id + "," + forma + "," + asc + "," +"\n")
+                        forma = input("Ingrese la nueva forma de pago (efectivo, tarjerta o cupon): ")
+                        asc = input("Ascii para totalizar la transacción: ")
+                        cambio = (id + "," + forma + "," + asc + "," + "\n")
                         linea = cambio
                     datos += linea
-                file.cloase()
+                file.close()
             with open("pagos.txt", "w") as file: 
                 file.write(datos)
                 file.close()
@@ -58,20 +84,24 @@ class IngresarPagos (object):
         os.system('cls')
         print ("----------------------------------")
         print ("    Sistema de Punto de Ventas    ")
-        print ( " CREAR/CONSULTAR FORMAS DE PAGO")
+        print ("      MENU CREACION DE PAGOS   ")
         print ("----------------------------------")
         print (" ")
         print ("1. Crear pago")
         print ("2. Modificar pago")
-        print ("3. Salir")
+        print ("0. Salir")
         print (" ")
+        print ("----------------------------------")
 
     def principal (self):
-        MenuOpciones = IngresarPagos()
-        MenuOpciones.menuPagos()
+        while True:
+            MenuOpciones = IngresarPagos()
+            MenuOpciones.menuPagos()
+            opc = input("Ingresar Opcion: ")
+            if opc == "1":
+                MenuOpciones.OpcionCrear()
+            if  opc == "2":
+                MenuOpciones.OpcionCambiar()
+            if opc == "0":
+                return
 
-        opc = input("Ingresar Opcion: ")
-        if opc == "1":
-            MenuOpciones.OpcionCrear()
-        elif opc == "2":
-            MenuOpciones.OpcionCambiar()

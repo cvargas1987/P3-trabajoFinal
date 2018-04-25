@@ -26,8 +26,6 @@ def reporta_vta_prod():
                 if (linea[0] == '2' and linea[3] == producto):
                     total = float(linea[4]) + total
             break
-                    
-
         msn =  (input("Total en ventas: " + str(total) + "$"))
         
 

@@ -43,7 +43,8 @@ class usuariosAdministrar (object):
             password = ""
             nom = ""
             nivel = 0
-            while True: 
+            while True:
+                print ("Oprimir cero (0) para Salir") 
                 login = (input("Login: "))
                 if (login == "0"):
                     return

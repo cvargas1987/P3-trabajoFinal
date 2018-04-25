@@ -90,18 +90,18 @@ class empresa (object):
         print ('1. Agregar Sucursarl.')
         print ('2. Modificar Sucursal.')
         print ('3. Eliminar Sucursal.')
-        print ('4. Salir')
+        print ('0. Salir')
 
     def Principal (self):
-        Opciones = empresa()
-        Opciones.Menu_Principal()
-        opcion = input('\t Escoja una opción: ')
-
-        if opcion == "1":
-            Opciones.Opcion_Agregar()
-        elif opcion == "2":
-            Opciones.Opcion_Modificar()
-        elif opcion == "3":
-            Opciones.Opcion_Eliminar()
-        else:
-            print ('Gracias.')
+        while True: 
+            Opciones = empresa()
+            Opciones.Menu_Principal()
+            opcion = input('\t Escoja una opción: ')
+            if opcion == "1":
+                Opciones.Opcion_Agregar()
+            if opcion == "2":
+                Opciones.Opcion_Modificar()
+            if opcion == "3":
+                Opciones.Opcion_Eliminar()
+            if opcion == "0":
+                return
